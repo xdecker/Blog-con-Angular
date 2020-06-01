@@ -1,0 +1,57 @@
+
+
+<div class="center">
+  <section id="content">
+
+    <h1 class="subheader">{{page_title}}</h1>
+
+
+    <!-- SIEMPRE PONER NOMBRE CON # A FORM Y A LOS INPUTS -->
+    <form class="mid-form" #articleForm="ngForm" (ngSubmit)="onSubmit()" enctype='multipart/form-data'>
+      <div class="form-group">
+        <label for="title">Titulo</label>
+        <input type="text" id="title" name="title" #title="ngModel" [(ngModel)]="article.title" required />
+
+        <small *ngIf="!title.valid && title.touched">
+          El titulo no es válido
+        </small>
+
+      </div>
+
+      <div class="form-group">
+        <label for="content">Contenido</label>
+        <textarea name="content" #content="ngModel" [(ngModel)]="article.content" required></textarea>
+
+
+        <small *ngIf="!content.valid && content.touched">
+          El contenido no es válido
+        </small>
+
+      </div>
+
+      <div class="col-4">
+        <div class="form-group">
+          <div class="image-preview">
+            <div class="image-thumb" *ngIf="is_edit == true">
+              <div class="image-wrap">
+                <img src="{{url + 'get-image/' + article.image}}" alt="{{article.title}}" *ngIf="article.image"/>
+                <img src="assets/images/default.png" alt="{{article.title}}" *ngIf="!article.image"/>
+              </div>
+            </div>
+            <input type="file" name="selectedFile" #selectFile (change)="onFileUpload($event)">
+          </div>
+        </div>
+      </div>
+
+
+      <div class="clearfix"></div>
+
+      <input type="submit" value="Enviar" class="btn btn-success" [disabled]="articleForm.invalid" />
+
+    </form>
+
+  </section>
+
+  <app-sidebar></app-sidebar>
+
+</div>
